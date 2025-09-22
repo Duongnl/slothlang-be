@@ -1,8 +1,8 @@
 package com.example.slothlang_be.configuration;
 
 
-import com.example.slothlang_be.dto.response.ApiResponse;
-import com.example.slothlang_be.dto.response.ErrorResponse;
+import com.example.slothlang_be.dto.response.config.ApiResponse;
+import com.example.slothlang_be.dto.response.config.ErrorResponse;
 import com.example.slothlang_be.exception.AuthErrorCode;
 import com.example.slothlang_be.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;

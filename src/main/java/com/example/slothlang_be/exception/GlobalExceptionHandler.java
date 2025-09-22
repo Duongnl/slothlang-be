@@ -1,8 +1,8 @@
 package com.example.slothlang_be.exception;
 
 
-import com.example.slothlang_be.dto.response.ApiResponse;
-import com.example.slothlang_be.dto.response.ErrorResponse;
+import com.example.slothlang_be.dto.response.config.ApiResponse;
+import com.example.slothlang_be.dto.response.config.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

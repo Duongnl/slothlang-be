@@ -1,4 +1,4 @@
-package com.example.slothlang_be.dto.response;
+package com.example.slothlang_be.dto.response.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
