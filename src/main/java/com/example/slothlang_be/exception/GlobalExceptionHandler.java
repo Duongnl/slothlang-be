@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class GlobalExceptionHandler {
 
 //   handle loi truyen du lieu sai dinh dang
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    ResponseEntity<ApiResponse> handlingHttpMessage(HttpMessageNotReadableException exception){
+    ResponseEntity<ApiResponse<?>> handlingHttpMessage(HttpMessageNotReadableException exception){
 
         return  ResponseEntity.badRequest().body(ApiResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -60,7 +61,7 @@ public class GlobalExceptionHandler {
 
 //    DefaultHandlerExceptionResolver , xu ly loi validate
     @ExceptionHandler( value = MethodArgumentNotValidException.class)
-    ResponseEntity<ApiResponse> handlingValidation(MethodArgumentNotValidException exception){
+    ResponseEntity<ApiResponse<?>> handlingValidation(MethodArgumentNotValidException exception){
 
         List<ErrorResponse> errorResponses = new ArrayList<>();
         exception.getBindingResult().getFieldErrors().forEach(exp -> {
@@ -80,21 +81,21 @@ public class GlobalExceptionHandler {
         );
     }
 
-//    @ExceptionHandler(value = AccessDeniedException.class)
-//    ResponseEntity<ApiResponse> handlingAccessDeniedException(AccessDeniedException exception){
-//        List<ErrorResponse> apiResponseList = new ArrayList<>();
-//        apiResponseList.add(ErrorResponse.builder()
-//                .code(PermissionErrorCode.UNAUTHORIZED.getCode())
-//                .message(PermissionErrorCode.UNAUTHORIZED.getMessage())
-//                .build());
-//
-//        return  ResponseEntity.badRequest().body(ApiResponse.builder()
-//                .status(HttpStatus.FORBIDDEN.value())
-//                .message(HttpStatus.FORBIDDEN.getReasonPhrase())
-//                .errors(apiResponseList)
-//                .build()
-//        );
-//    }
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse<?>> handlingAccessDeniedException(AccessDeniedException exception){
+        List<ErrorResponse> apiResponseList = new ArrayList<>();
+        apiResponseList.add(ErrorResponse.builder()
+                .code(PermissionErrorCode.FORBIDDEN.getCode())
+                .message(PermissionErrorCode.FORBIDDEN.getMessage())
+                .build());
+
+        return  ResponseEntity.badRequest().body(ApiResponse.builder()
+                .status(HttpStatus.FORBIDDEN.value())
+                .message(HttpStatus.FORBIDDEN.getReasonPhrase())
+                .errors(apiResponseList)
+                .build()
+        );
+    }
 
 
 
