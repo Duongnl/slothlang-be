@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -43,7 +44,10 @@ public class User {
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    UserStatus userStatus;
+    UserStatus status;
+
+    @Column(name = "created_at", nullable = false)
+    LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
